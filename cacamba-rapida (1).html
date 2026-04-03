@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caçamba Rápida – Alugue agora!</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1a6fd4;
+    --green-dark: #1458ab;
+    --green-light: #4a9eff;
+    --text-dark: #0d1b2e;
+    --text-mid: #444;
+    --text-light: #666;
+    --white: #fff;
+    --gray-bg: #f4f7fb;
+    --card-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: #111;
+    color: #ccc;
+    font-size: 13px;
+    padding: 8px 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .topbar svg { color: var(--green); }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 60px;
+    background: var(--white);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-dark);
+  }
+  .logo span { color: var(--green); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-mid);
+    font-weight: 500;
+    font-size: 14px;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .btn {
+    display: inline-block;
+    background: var(--green);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 60px 80px;
+    gap: 40px;
+    min-height: 85vh;
+    background: var(--white);
+  }
+  .hero-text { flex: 1; max-width: 420px; }
+  .hero-text h1 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text-dark);
+  }
+  .hero-text h1 span { color: var(--green); }
+  .hero-text .accent-bar {
+    width: 48px; height: 4px;
+    background: var(--green);
+    margin: 20px 0 32px;
+    border-radius: 2px;
+  }
+  .hero-cards {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 660px;
+  }
+  .card {
+    background: var(--gray-bg);
+    border-radius: 16px;
+    padding: 36px 28px;
+    box-shadow: var(--card-shadow);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(26,111,212,.15); }
+  .card-icon {
+    width: 52px; height: 52px;
+    color: var(--green);
+    margin-bottom: 18px;
+  }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); }
+  .card p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+  /* ── ABOUT ── */
+  .about {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding: 80px 60px;
+    background: var(--white);
+  }
+  .about-img-wrap {
+    flex: 1;
+    position: relative;
+    max-width: 560px;
+  }
+  .about-img-bg {
+    position: absolute;
+    top: -24px; left: -24px;
+    width: 76%;
+    height: 76%;
+    background: linear-gradient(135deg, var(--green-light), var(--green-dark));
+    border-radius: 20px;
+    opacity: .85;
+    z-index: 0;
+  }
+  .about-img-wrap img {
+    position: relative;
+    z-index: 1;
+    width: 82%;
+    margin-left: 60px;
+    margin-top: 40px;
+    border-radius: 16px;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    /* placeholder gradient instead of real image */
+    background: #c8c8b0;
+  }
+  .about-img-placeholder {
+    position: relative;
+    z-index: 1;
+    width: 82%;
+    margin-left: 60px;
+    margin-top: 40px;
+    border-radius: 16px;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #e8dfc0, #c8b890);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90px;
+    overflow: hidden;
+  }
+  .about-text { flex: 1; }
+  .about-text h2 { font-size: 40px; font-weight: 800; line-height: 1.2; color: var(--text-dark); }
+  .about-text h2 span { color: var(--green); }
+  .section-bar { width: 48px; height: 4px; background: var(--green); margin: 18px 0 24px; border-radius: 2px; }
+  .about-text p { font-size: 14px; color: var(--text-light); line-height: 1.8; margin-bottom: 12px; }
+  .about-text strong { color: var(--text-dark); font-weight: 600; }
+
+  /* ── STATS + WHY ── */
+  .stats-section {
+    display: flex;
+    align-items: stretch;
+    min-height: 460px;
+    gap: 0;
+  }
+  .stats-left {
+    flex: 1;
+    background: linear-gradient(135deg, #1a6fd4 0%, #4a9eff 50%, #1458ab 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 0 0 0;
+  }
+  .stats-left::before {
+    content: 'g';
+    position: absolute;
+    font-size: 320px;
+    font-weight: 900;
+    opacity: .07;
+    top: -60px; left: -20px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-big { font-size: 90px; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 16px; font-weight: 500; margin-bottom: 40px; letter-spacing: 1px; }
+  .stat-row { display: flex; gap: 40px; }
+  .stat-item { text-align: center; }
+  .stat-item .num { font-size: 34px; font-weight: 800; }
+  .stat-item .lbl { font-size: 11px; letter-spacing: 1.5px; font-weight: 600; opacity: .9; }
+  .stat-divider { width: 1px; background: rgba(255,255,255,.35); }
+
+  .why-right {
+    flex: 1;
+    background: var(--white);
+    padding: 60px 50px;
+    box-shadow: -8px 0 40px rgba(0,0,0,.06);
+    border-radius: 20px 20px 20px 0;
+    position: relative;
+    z-index: 2;
+    margin: 30px 0 30px -30px;
+  }
+  .why-right h2 { font-size: 38px; font-weight: 800; line-height: 1.25; color: var(--text-dark); }
+  .why-right h2 span { color: var(--green); }
+  .why-right p { font-size: 14px; color: var(--text-light); line-height: 1.8; margin-bottom: 28px; }
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .check-list li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; font-weight: 500; color: var(--text-dark);
+  }
+  .check-list li::before {
+    content: '';
+    display: block;
+    width: 20px; height: 20px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    margin: 70px 60px;
+    background: linear-gradient(135deg, #1a6fd4 0%, #4a9eff 50%, #1458ab 100%);
+    border-radius: 20px;
+    padding: 70px 40px;
+    text-align: center;
+    color: var(--white);
+  }
+  .cta-banner .eyebrow { font-size: 13px; font-weight: 500; opacity: .85; margin-bottom: 16px; }
+  .cta-banner h2 { font-size: 28px; font-weight: 700; max-width: 780px; margin: 0 auto 36px; line-height: 1.4; }
+  .btn-dark {
+    background: #111;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: opacity .2s;
+    display: inline-block;
+  }
+  .btn-dark:hover { opacity: .8; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111;
+    color: #aaa;
+    text-align: center;
+    padding: 28px 40px;
+    font-size: 13px;
+  }
+  footer span { color: var(--green); }
+
+  /* ── WHATSAPP FLOAT ── */
+  .wa-float {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    padding: 10px 18px 10px 10px;
+    text-decoration: none;
+    transition: transform .2s;
+  }
+  .wa-float:hover { transform: scale(1.04); }
+  .wa-float .wa-icon {
+    width: 44px; height: 44px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wa-float .wa-icon svg { width: 24px; height: 24px; fill: white; }
+  .wa-float span { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-dark);
+    border-radius: 2px;
+    transition: all .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE MENU OVERLAY ── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13,27,46,.97);
+    z-index: 200;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+    transition: color .2s;
+  }
+  .mobile-menu a:hover { color: var(--green-light); }
+  .mobile-menu .close-btn {
+    position: absolute;
+    top: 20px; right: 24px;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 32px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* ── TABLET (≤900px) ── */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-btn-desktop { display: none; }
+
+    .hero {
+      flex-direction: column;
+      padding: 50px 24px 40px;
+      min-height: unset;
+      text-align: center;
+    }
+    .hero-text { max-width: 100%; }
+    .hero-text .accent-bar { margin: 16px auto 28px; }
+    .hero-text h1 { font-size: 38px; }
+    .hero-cards {
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .about {
+      flex-direction: column;
+      padding: 50px 24px;
+      text-align: center;
+    }
+    .about-img-wrap { width: 100%; max-width: 100%; }
+    .about-img-placeholder {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 60px;
+    }
+    .about-img-bg { display: none; }
+    .section-bar { margin: 14px auto 20px; }
+
+    .stats-section { flex-direction: column; }
+    .why-right { margin: 0; border-radius: 0; padding: 40px 24px; }
+
+    .cta-banner { margin: 40px 20px; padding: 50px 24px; }
+    .cta-banner h2 { font-size: 20px; }
+  }
+
+  /* ── MOBILE (≤480px) ── */
+  @media (max-width: 480px) {
+    .topbar { padding: 8px 16px; font-size: 12px; }
+
+    nav { padding: 12px 16px; }
+    .logo { font-size: 18px; }
+
+    .hero { padding: 36px 16px 32px; }
+    .hero-text h1 { font-size: 30px; }
+    .hero-cards { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 24px 20px; }
+    .card h3 { font-size: 16px; }
+
+    .about { padding: 36px 16px; }
+    .about-text h2 { font-size: 28px; }
+    .about-img-placeholder { font-size: 48px; margin-left: auto; margin-right: auto; width: 90%; }
+
+    .stats-left { padding: 40px 20px; }
+    .stat-big { font-size: 64px; }
+    .stat-item .num { font-size: 24px; }
+    .stat-row { gap: 20px; }
+
+    .why-right { padding: 36px 16px; }
+    .why-right h2 { font-size: 26px; }
+
+    .cta-banner { margin: 24px 12px; padding: 40px 16px; border-radius: 16px; }
+    .cta-banner h2 { font-size: 17px; }
+
+    .wa-float { padding: 8px 14px 8px 8px; bottom: 16px; right: 16px; }
+    .wa-float span { font-size: 12px; }
+    .wa-float .wa-icon { width: 36px; height: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.47 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  Caçamba Rápida - Alugue agora!
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Caçamba <span>Rápida</span></div>
+  <ul class="nav-links">
+    <li><a href="#hero">Início</a></li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#why">Por que nós?</a></li>
+    <li><a href="#cta">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5527999999999" class="btn nav-btn-desktop">Fale Conosco</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeMenu">✕</button>
+  <a href="#hero" class="mobile-link">Início</a>
+  <a href="#about" class="mobile-link">Sobre</a>
+  <a href="#why" class="mobile-link">Por que nós?</a>
+  <a href="#cta" class="mobile-link">Contato</a>
+  <a href="https://wa.me/5527999999999" class="btn" style="margin-top:8px">Fale Conosco</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-text fade-up">
+    <h1>Caçamba Em<br><span>Até 2 Horas</span><br>No Seu <span>Endereço</span></h1>
+    <div class="accent-bar"></div>
+    <a href="https://wa.me/5527999999999" class="btn">Fale Conosco</a>
+  </div>
+
+  <div class="hero-cards fade-up" style="transition-delay:.15s">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      <h3>Rapidez na Entrega</h3>
+      <p>Garantimos a entrega da sua caçamba em até 2 horas em seu endereço</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+      <h3>Frota Grande</h3>
+      <p>Temos 26 caminhões disponíveis para realizar a entrega e a retirada das caçambas</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+      </svg>
+      <h3>Praticidade</h3>
+      <p>Em menos de 15 minutos você tem um orçamento personalizado</p>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/><path d="M17 3l4 4-4 4"/>
+      </svg>
+      <h3>Horários Flexíveis</h3>
+      <p>Fazemos a entrega e a retirada das caçambas das 05:00 às 22:00.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img-wrap fade-up">
+    <div class="about-img-bg"></div>
+    <div class="about-img-placeholder">🏗️</div>
+  </div>
+  <div class="about-text fade-up" style="transition-delay:.15s">
+    <h2>Um pouco<br>sobre a <span>nossa<br>empresa</span></h2>
+    <div class="section-bar"></div>
+    <p>Nossa empresa é especializada no <strong>aluguel de caçambas para entulho</strong>, oferecendo soluções práticas, seguras e eficientes para o descarte de resíduos de obras, reformas, limpezas e serviços em geral. Atuamos com foco na rapidez na entrega e retirada das caçambas, garantindo que nossos clientes tenham uma experiência ágil e sem complicações.</p>
+    <p>Trabalhamos dentro das normas ambientais e municipais, contribuindo para o destino correto dos materiais descartados e para a preservação do meio ambiente. Nosso compromisso é oferecer um atendimento transparente, eficiente e de qualidade, atendendo desde clientes residenciais até grandes empresas e construtoras.</p>
+    <a href="https://wa.me/5527999999999" class="btn" style="margin-top:10px">Fale Conosco</a>
+  </div>
+</section>
+
+<!-- STATS + WHY -->
+<section class="stats-section" id="why">
+  <div class="stats-left fade-up">
+    <div class="stat-big">135</div>
+    <div class="stat-label">Caçambas</div>
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="num">+6.800</div>
+        <div class="lbl">CLIENTES ATENDIDOS</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="num">100%</div>
+        <div class="lbl">CLIENTES SATISFEITOS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-right fade-up" style="transition-delay:.15s">
+    <h2>Por que <span>escolher</span><br>a gente?</h2>
+    <div class="section-bar"></div>
+    <p>Escolher nossa empresa é contar com agilidade, compromisso e responsabilidade em todas as etapas do serviço. Trabalhamos com entrega e retirada rápidas, garantindo que sua obra ou limpeza siga sem atrasos. Priorizamos práticas ambientalmente corretas, destinando o entulho de forma segura e dentro das normas. Além disso, oferecemos um atendimento transparente, preços justos e soluções personalizadas para cada cliente, sempre com foco em qualidade, segurança e confiança.</p>
+    <ul class="check-list">
+      <li>Agilidade na entrega e retirada</li>
+      <li>Descarte correto e responsabilidade ambiental</li>
+      <li>Atendimento transparente e personalizado</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner fade-up" id="cta">
+  <div class="eyebrow">O que está esperando?</div>
+  <h2>Clique no botão abaixo e venha fazer um orçamento personalizado conosco, e descubra a facilidade de alugar uma caçamba!</h2>
+  <a href="https://wa.me/5527999999999" class="btn-dark">Fale Conosco</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Caçamba Rápida</span>. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5527999999999" class="wa-float" target="_blank" rel="noopener">
+  <div class="wa-icon">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.124 1.528 5.857L.057 23.52a.5.5 0 0 0 .614.614l5.663-1.471A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.015-1.375l-.36-.214-3.727.968.99-3.614-.235-.372A9.818 9.818 0 1 1 12 21.818z"/>
+    </svg>
+  </div>
+  <span>Fale Conosco!</span>
+</a>
+
+<script>
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeMenu = document.getElementById('closeMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  closeMenu.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>
